@@ -32,7 +32,7 @@ public class Band {
     } else {
       Band newBand = (Band) otherBand;
       return this.getBandName().equals(newBand.getBandName()) &&
-             this.getId() == newBand.getId();
+      this.getId() == newBand.getId();
     }
   }
 
@@ -40,28 +40,73 @@ public class Band {
     try(Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO bands(band_name) VALUES (:band_name)";
       this.id = (int) con.createQuery(sql, true)
-        .addParameter("band_name", this.band_name)
-        .executeUpdate()
-        .getKey();
+      .addParameter("band_name", this.band_name)
+      .executeUpdate()
+      .getKey();
     }
   }
 
-  // public static Band find(int id) {
+  public static Band find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM bands where id=:id";
+      Band band = con.createQuery(sql)
+      .addParameter("id", id)
+      .executeAndFetchFirst(Band.class);
+      return band;
+    }
+  }
+
+  public void delete() {
+    try(Connection con = DB.sql2o.open()) {
+      String deleteQuery = "DELETE FROM bands WHERE id = :id;";
+      con.createQuery(deleteQuery)
+      .addParameter("id", this.getId())
+      .executeUpdate();
+
+      String joinDeleteQuery = "DELETE FROM bands_venues WHERE band_id = :bandId";
+      con.createQuery(joinDeleteQuery)
+      .addParameter("bandId", this.getId())
+      .executeUpdate();
+    }
+  }
+
+  public void update(String newBandName) {
+    try(Connection con = DB.sql2o.open()) {
+      String updateSql = "UPDATE bands SET band_name = :band_name WHERE id = :id";
+      con.createQuery(updateSql)
+        .addParameter("band_name", newBandName)
+        .addParameter("id", this.getId())
+        .executeUpdate();
+    }
+  }
+
+  // public void addVenue(Venue venue) {
   //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT * FROM bands where id=:id";
-  //     Band band = con.createQuery(sql)
-  //       .addParameter("id", id)
-  //       .executeAndFetchFirst(Band.class);
-  //     return band;
+  //     String sql = "INSERT INTO bands_venues (band_id, venue_id) VALUES (:band_id, :venue_id)";
+  //     con.createQuery(sql)
+  //     .addParameter("band_id", this.getId())
+  //     .addParameter("venue_id", venue.getId())
+  //     .executeUpdate();
   //   }
   // }
+
+  // public List<Venue> getVenues() {
+  //   try(Connection con = DB.sql2o.open()){
+  //     String joinQuery = "SELECT venue_id FROM bands_venues WHERE band_id = :band_id";
+  //     List<Integer> venueIds = con.createQuery(joinQuery)
+  //     .addParameter("band_id", this.getId())
+  //     .executeAndFetch(Integer.class);
   //
-  // public List<Client> getClients() {
-  //   try(Connection con = DB.sql2o.open()) {
-  //     String sql = "SELECT * FROM clients where bandId=:id";
-  //     return con.createQuery(sql)
-  //       .addParameter("id", this.id)
-  //       .executeAndFetch(Client.class);
+  //     List<Venue> venues = new ArrayList<Venue>();
+  //
+  //     for (Integer venueId : venueIds) {
+  //       String venueQuery = "Select * From venues WHERE id = :venueId";
+  //       Venue venue = con.createQuery(venueQuery)
+  //       .addParameter("venueId", venueId)
+  //       .executeAndFetchFirst(Venue.class);
+  //       venues.add(venue);
+  //     }
+  //     return venues;
   //   }
   // }
 }
