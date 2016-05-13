@@ -32,5 +32,38 @@ public class BandTest {
     assertTrue(firstBand.equals(secondBand));
   }
 
+  @Test
+  public void save_savesIntoDatabase_true() {
+    Band myBand = new Band("Thee Epicoders");
+    myBand.save();
+    assertTrue(Band.all().get(0).equals(myBand));
+  }
 
+  // @Test
+  // public void save_assignsIdToObject() {
+  //   Band myBand = new Band("Thee Epicoders");
+  //   myBand.save();
+  //   Band savedBand = Band.all().get(0);
+  //   assertEquals(myBand.getId(), savedBand.getId());
+  // }
+  //
+  // @Test
+  // public void find_findBandInDatabase_true() {
+  //   Band myBand = new Band("Thee Epicoders");
+  //   myBand.save();
+  //   Band savedBand = Band.find(myBand.getId());
+  //   assertTrue(myBand.equals(savedBand));
+  // }
+  //
+  // @Test
+  // public void getClients_retrievesALlClientsFromDatabase_clientsList() {
+  //   Band myBand = new Band("Thee Epicoders");
+  //   myBand.save();
+  //   Client firstClient = new Client("Mow the lawn", myBand.getId());
+  //   firstClient.save();
+  //   Client secondClient = new Client("Do the dishes", myBand.getId());
+  //   secondClient.save();
+  //   Client[] clients = new Client[] { firstClient, secondClient };
+  //   assertTrue(myBand.getClients().containsAll(Arrays.asList(clients)));
+  // }
 }
