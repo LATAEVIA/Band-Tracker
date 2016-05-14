@@ -61,13 +61,13 @@ public class AppTest extends FluentTest {
     assertThat(pageSource()).contains("Thee FourHundred");
   }
 
-  // @Test
-  // public void venueIsDiplayedOnBandPageTest() {
-  //   goTo("http://localhost:4567/");
-  //   click("a", withText("Add a band"));
-  //   fill("#bandName").with("Thee Epicoders");
-  //   submit(".btn");
-  //   goTo("http://localhost:4567/bands");
-  //   assertThat(pageSource()).contains("Thee Epicoders");
-  // }
+  @Test
+  public void venueIsDiplayedOnBandPageTest() {
+    goTo("http://localhost:4567/");
+    click("a", withText("Add a band"));
+    fill("#bandName").with("Thee Epicoders");
+    submit(".btn");
+    goTo("http://localhost:4567/bands");
+    assertThat(pageSource()).contains("Thee Epicoders");
+  }
 }

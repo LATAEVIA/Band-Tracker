@@ -1,1 +1,7 @@
-<h1>$band.getBandName() $venue.getVenueName()</h1>
+<h1>$band.getBandName()</h1>
+
+<ul>
+  #foreach ($venue in $venues)
+    <li><a href="/bands/$band.getId()">$venue.getVenueName()</a></li>
+  #end
+</ul>

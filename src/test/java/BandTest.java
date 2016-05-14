@@ -2,6 +2,8 @@ import org.sql2o.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.Arrays;
+import java.util.List;
+
 
 public class BandTest {
 
@@ -53,5 +55,19 @@ public class BandTest {
     myBand.save();
     Band savedBand = Band.find(myBand.getId());
     assertTrue(myBand.equals(savedBand));
+  }
+
+  @Test
+  public void getVenues_retrievesAllVenuesFromDatabase_venuesList() {
+    Band myBand = new Band("Thee Epicoders");
+    myBand.save();
+    Venue firstVenue = new Venue("Thee FourHundred");
+    firstVenue.save();
+    myBand.addVenue(firstVenue);
+    Venue secondVenue = new Venue("Ye ole Eighth Floor");
+    secondVenue.save();
+    myBand.addVenue(secondVenue);
+    List savedVenues = myBand.getVenues();
+    assertEquals(2, savedVenues.size());
   }
 }

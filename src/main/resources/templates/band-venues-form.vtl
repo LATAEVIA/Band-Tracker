@@ -1,6 +1,7 @@
 <p>What venue has $band.getBandName() performed in?</p>
 
-<form action="/bands/$band.getId()/venues/new/append" method="post">
+<form action="/bands/$band.getId()/venues" method="post">
+  <input id="band_id" name="band_id" type="hidden" value="$band.getId()">
   #foreach($venue in $venues)
     <div class="checkbox form-group">
       <label><input name="venueCheckbox" type="checkbox" value="$venue.getId()">$venue.getVenueName()</label>
