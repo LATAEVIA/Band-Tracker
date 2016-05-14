@@ -1,0 +1,21 @@
+<p>What venue has $band.getBandName() performed in?</p>
+
+<form action="/bands/$band.getId()/venues/new/append" method="post">
+  #foreach($venue in $venues)
+    <div class="checkbox form-group">
+      <label><input name="venueCheckbox" type="checkbox" value="$venue.getId()">$venue.getVenueName()</label>
+    </div>
+  #end
+  <button id="checklistVenueSubmit" type="submit" class="btn btn-default">Add Venue(s) to band</button>
+</form>
+
+Add venues to create a check list, or choose from the existing list, then submit.
+
+<form action="/bands/$band.getId()/venues/new" method="post">
+  <div class="form-group">
+    <label for="venueName">Venue Name</label>
+    <input id="venueName" name="venueName" type="text">
+  <button id="addaVenueToChecklitSubmit" type="submit" class="btn btn-default">Add Venue to list</button>
+</form>
+
+<p><a href="/">Home</a></p>

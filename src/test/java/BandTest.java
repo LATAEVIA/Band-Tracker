@@ -54,16 +54,4 @@ public class BandTest {
     Band savedBand = Band.find(myBand.getId());
     assertTrue(myBand.equals(savedBand));
   }
-
-  // @Test
-  // public void getVenues_retrievesALlVenuesFromDatabase_venuesList() {
-  //   Band myBand = new Band("Thee Epicoders");
-  //   myBand.save();
-  //   Venue firstVenue = new Venue("Mow the lawn", myBand.getId());
-  //   firstVenue.save();
-  //   Venue secondVenue = new Venue("Do the dishes", myBand.getId());
-  //   secondVenue.save();
-  //   Venue[] venues = new Venue[] { firstVenue, secondVenue };
-  //   assertTrue(myBand.getVenues().containsAll(Arrays.asList(venues)));
-  // }
 }
