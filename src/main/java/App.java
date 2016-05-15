@@ -41,7 +41,6 @@ public class App {
       HashMap<String, Object> model = new HashMap<String, Object>();
       Band band = Band.find(Integer.parseInt(request.params("id")));
       model.put("band", band);
-      model.put("allVenues", Venue.all());//Add ability to loop through venues to vtl
       model.put("template", "templates/band.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -81,5 +80,32 @@ public class App {
       model.put("template", "templates/band-venues-success.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+
+    post("/bands/:id/edit", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      int bandId = Integer.parseInt (request.params("id"));
+      Band band = Band.find(bandId);
+      String newBandName = request.queryParams("bandRename");
+      band.update(newBandName);
+      response.redirect("/bands/" + bandId);
+      return null;
+    });
+
+    get("/bands/:id/edit", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Band band = Band.find(Integer.parseInt(request.params("id")));
+      model.put("band", band);
+      model.put("template", "templates/band-edit.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+    
+    post("/bands/:id/delete", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      int bandId = Integer.parseInt (request.params("id"));
+      Band band = Band.find(bandId);
+      band.delete();
+      response.redirect("/bands");
+      return null;
+    });
   }
 }

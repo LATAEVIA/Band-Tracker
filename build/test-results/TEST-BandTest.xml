@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="BandTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2016-05-14T01:47:07" hostname="epicodus-58.local" time="0.112">
+<testsuite name="BandTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2016-05-15T03:29:27" hostname="LaTaevias-MacBook-Pro.local" time="0.279">
   <properties/>
-  <testcase name="equals_returnsTrueIfNamesAretheSame" classname="BandTest" time="0.005"/>
-  <testcase name="getBandName_bandInstantiatesWithName_String" classname="BandTest" time="0.005"/>
-  <testcase name="find_findBandInDatabase_true" classname="BandTest" time="0.018"/>
-  <testcase name="all_emptyAtFirst" classname="BandTest" time="0.01"/>
-  <testcase name="save_savesIntoDatabase_true" classname="BandTest" time="0.015"/>
-  <testcase name="save_assignsIdToObject" classname="BandTest" time="0.017"/>
-  <testcase name="getVenues_retrievesAllVenuesFromDatabase_venuesList" classname="BandTest" time="0.034"/>
-  <testcase name="Band_instantiatesCorrectly_true" classname="BandTest" time="0.005"/>
+  <testcase name="equals_returnsTrueIfNamesAretheSame" classname="BandTest" time="0.011"/>
+  <testcase name="getBandName_bandInstantiatesWithName_String" classname="BandTest" time="0.008"/>
+  <testcase name="find_findBandInDatabase_true" classname="BandTest" time="0.032"/>
+  <testcase name="all_emptyAtFirst" classname="BandTest" time="0.019"/>
+  <testcase name="save_savesIntoDatabase_true" classname="BandTest" time="0.027"/>
+  <testcase name="save_assignsIdToObject" classname="BandTest" time="0.031"/>
+  <testcase name="getVenues_retrievesAllVenuesFromDatabase_venuesList" classname="BandTest" time="0.073"/>
+  <testcase name="delete_deletesBand_true" classname="BandTest" time="0.032"/>
+  <testcase name="update_updatesBandName_true" classname="BandTest" time="0.034"/>
+  <testcase name="Band_instantiatesCorrectly_true" classname="BandTest" time="0.008"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

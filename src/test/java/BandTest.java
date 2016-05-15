@@ -70,4 +70,21 @@ public class BandTest {
     List savedVenues = myBand.getVenues();
     assertEquals(2, savedVenues.size());
   }
+
+  @Test
+  public void update_updatesBandName_true() {
+    Band testBand = new Band("Thee Epicoders");
+    testBand.save();
+    testBand.update("Ye old Epigrads");
+    assertEquals("Ye old Epigrads", Band.find(testBand.getId()).getBandName());
+  }
+
+  @Test
+  public void delete_deletesBand_true() {
+    Band myBand = new Band("Thee Epicoders");
+    myBand.save();
+    int myBandId = myBand.getId();
+    myBand.delete();
+    assertEquals(null, Band.find(myBandId));
+  }
 }

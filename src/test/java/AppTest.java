@@ -62,12 +62,37 @@ public class AppTest extends FluentTest {
   }
 
   @Test
-  public void venueIsDiplayedOnBandPageTest() {
-    goTo("http://localhost:4567/");
-    click("a", withText("Add a band"));
-    fill("#bandName").with("Thee Epicoders");
+  public void venueIsDiplayedOnVenuePageTest() {
+    Band testBand = new Band("Thee Epicoders");
+    testBand.save();
+    Venue testVenue = new Venue("Thee FourHundred");
+    testVenue.save();
+    String url = String.format("http://localhost:4567/bands/%d/venues/new", testBand.getId());
+    goTo(url);
+    assertThat(pageSource()).contains("Thee FourHundred");
+  }
+
+  @Test
+  public void BandNameIsUpdated() {
+    Band testBand = new Band("Thee Epicoders");
+    testBand.save();
+    String url = String.format("http://localhost:4567/bands/%d", testBand.getId());
+    goTo(url);
+    click("a", withText("Edit band"));
+    fill("#bandRename").with("Ye old Epigrads");
     submit(".btn");
-    goTo("http://localhost:4567/bands");
-    assertThat(pageSource()).contains("Thee Epicoders");
+    goTo(url);
+    assertThat(pageSource()).contains("Ye old Epigrads");
+  }
+
+  @Test
+  public void bandIsDeleted() {
+    Band testBand = new Band("Thee Epicoders");
+    testBand.save();
+    String url = String.format("http://localhost:4567/bands/%d", testBand.getId());
+    goTo(url);
+    submit("#delete");
+    goTo(url);
+    assertThat(pageSource()).contains("$band.getBandName()");
   }
 }

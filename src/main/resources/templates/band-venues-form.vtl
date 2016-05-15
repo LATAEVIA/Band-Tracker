@@ -1,4 +1,5 @@
-<p>What venue has $band.getBandName() performed in?</p>
+<div class="jumbotron">
+  <h1>What venue(s) has $band.getBandName() performed in?</h1>
 
 <form action="/bands/$band.getId()/venues" method="post">
   <input id="band_id" name="band_id" type="hidden" value="$band.getId()">
@@ -9,7 +10,8 @@
   #end
   <button id="checklistVenueSubmit" type="submit" class="btn btn-default">Add Venue(s) to band</button>
 </form>
-
+</div>
+<br>
 Add venues to create a check list, or choose from the existing list, then submit.
 
 <form action="/bands/$band.getId()/venues/new" method="post">
@@ -19,4 +21,8 @@ Add venues to create a check list, or choose from the existing list, then submit
   <button id="addaVenueToChecklitSubmit" type="submit" class="btn btn-default">Add Venue to list</button>
 </form>
 
-<p><a href="/">Home</a></p>
+
+<a href="/bands/$band.getId()/edit">Edit band</a><br>
+<a href="//bands/$band.getId()/delete">Delete band</a><br>
+<a href="/bands">View all bands</a><br>
+<a href="/">Home</a><br>
