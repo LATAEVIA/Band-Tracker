@@ -1,7 +1,14 @@
 <div class="jumbotron">
+  <h1>You must actually select a checkbox!</h1>
   <h1>What venue(s) has $band.getBandName() performed in?</h1>
 
-<form action="/bands/$band.getId()/venues" method="post">
+<form action="/bands/$band.getId()/venues" method="post" onsubmit="
+   if (!this.venueCheckbox.checked == null){
+     return true;
+   } else {
+     alert('You must select a venue first.');
+     return false;
+   }">
   <input id="band_id" name="band_id" type="hidden" value="$band.getId()">
   #foreach($venue in $venues)
     <div class="checkbox form-group">

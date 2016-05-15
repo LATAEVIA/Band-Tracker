@@ -68,16 +68,25 @@ public class App {
     post("/bands/:id/venues", (request,response) ->{
       HashMap<String, Object> model = new HashMap<String, Object>();
       Band band = Band.find(Integer.parseInt(request.params("id")));
-
+      int band_id = (Integer.parseInt(request.params("id")));
       String[] venue_ids =  request.queryParamsValues("venueCheckbox");
-      for (String venue_id : venue_ids) {
-        Venue newVenue = Venue.find(Integer.parseInt(venue_id));
-        band.addVenue(newVenue);
-        System.out.println(venue_ids);
+
+      if(venue_ids == null) {
+        model.put("venues", band.getVenues());
+        model.put("band", band);
+        model.put("template", "templates/band-venues-no-success.vtl");
+        return new ModelAndView(model, layout);
       }
-      model.put("venues", band.getVenues());
-      model.put("band", band);
-      model.put("template", "templates/band-venues-success.vtl");
+      else {
+        for (String venue_id : venue_ids) {
+          Venue newVenue = Venue.find(Integer.parseInt(venue_id));
+          band.addVenue(newVenue);
+          System.out.println(venue_ids);
+        }
+        model.put("venues", band.getVenues());
+        model.put("band", band);
+        model.put("template", "templates/band-venues-success.vtl");
+      }
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -98,7 +107,7 @@ public class App {
       model.put("template", "templates/band-edit.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
-    
+
     post("/bands/:id/delete", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
       int bandId = Integer.parseInt (request.params("id"));
