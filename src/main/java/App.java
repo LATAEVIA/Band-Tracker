@@ -54,7 +54,7 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    post("//bands/:id/venues/new", (request,response) ->{
+    post("/bands/:id/venues/new", (request,response) ->{
       HashMap<String, Object> model = new HashMap<String, Object>();
       int band_id = (Integer.parseInt(request.params("id")));
       String venueName = request.queryParams("venueName");
@@ -66,27 +66,18 @@ public class App {
     });
 
     post("/bands/:id/venues", (request,response) ->{
+      //array of values?!? Is that an array of numbers assigned numerically from top to bottom or an array of whatever is in the value attributes fetched upon submit
       HashMap<String, Object> model = new HashMap<String, Object>();
       Band band = Band.find(Integer.parseInt(request.params("id")));
       int band_id = (Integer.parseInt(request.params("id")));
       String[] venue_ids =  request.queryParamsValues("venueCheckbox");
-
-      if(venue_ids == null) {
-        model.put("venues", band.getVenues());
-        model.put("band", band);
-        model.put("template", "templates/band-venues-no-success.vtl");
-        return new ModelAndView(model, layout);
-      }
-      else {
         for (String venue_id : venue_ids) {
           Venue newVenue = Venue.find(Integer.parseInt(venue_id));
           band.addVenue(newVenue);
-          System.out.println(venue_ids);
         }
-        model.put("venues", band.getVenues());
-        model.put("band", band);
-        model.put("template", "templates/band-venues-success.vtl");
-      }
+      model.put("venues", band.getVenues());
+      model.put("band", band);
+      model.put("template", "templates/band-venues-success.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
@@ -114,6 +105,101 @@ public class App {
       Band band = Band.find(bandId);
       band.delete();
       response.redirect("/bands");
+      return null;
+    });
+
+    get("/venues/new", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      model.put("template", "templates/venue-form.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/venues", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      String venueName = request.queryParams("venueName");
+      Venue newVenue = new Venue(venueName);
+      newVenue.save();
+      model.put("venue", newVenue);
+      model.put("template", "templates/venue-success.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/venues", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      model.put("venues", Venue.all());
+      model.put("template", "templates/venues.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/venues/:id", (request,response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Venue venue = Venue.find(Integer.parseInt(request.params("id")));
+      model.put("venue", venue);
+      model.put("template", "templates/venue.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/venues/:id/bands/new", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Venue venue = Venue.find(Integer.parseInt(request.params("id")));
+      model.put("bands", Band.all());
+      model.put("venue", venue);
+      model.put("template", "templates/venues-band-form.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/venues/:id/bands/new", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      int venue_id = (Integer.parseInt(request.params("id")));
+      String bandName = request.queryParams("bandName");
+      Band newBand = new Band(bandName);
+      newBand.save();
+      String url = String.format("/venues/%d/bands/new", venue_id);
+      response.redirect(url);
+      return null;
+    });
+
+    post("/venues/:id/bands", (request,response) ->{
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Venue venue = Venue.find(Integer.parseInt(request.params("id")));
+      int venue_id = (Integer.parseInt(request.params("id")));
+      String[] band_ids =  request.queryParamsValues("bandCheckbox");
+        for (String band_id : band_ids) {
+          Band newBand = Band.find(Integer.parseInt(band_id));
+          venue.addBand(newBand);
+        }
+      model.put("bands", venue.getBands());
+      model.put("venue", venue);
+      model.put("template", "templates/venue-bands-success.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+
+
+    post("/venues/:id/edit", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      int venueId = Integer.parseInt (request.params("id"));
+      Venue venue = Venue.find(venueId);
+      String newVenueName = request.queryParams("venueRename");
+      venue.update(newVenueName);
+      response.redirect("/venues/" + venueId);
+      return null;
+    });
+
+    get("/venues/:id/edit", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Venue venue = Venue.find(Integer.parseInt(request.params("id")));
+      model.put("venue", venue);
+      model.put("template", "templates/venue-edit.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/venues/:id/delete", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      int venueId = Integer.parseInt (request.params("id"));
+      Venue venue = Venue.find(venueId);
+      venue.delete();
+      response.redirect("/venues");
       return null;
     });
   }

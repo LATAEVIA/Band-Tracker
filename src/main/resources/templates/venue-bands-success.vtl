@@ -1,0 +1,12 @@
+<h1>You has successfully added a band to <a href="/venues/$venue.getId()">$venue.getVenueName()</a></h1>
+
+<ul>
+  #foreach ($band in $bands)
+    <li>$band.getBandName()</li>
+  #end
+</ul>
+
+<a href="/venues/$venue.getId()/bands/new">Add another band</a><br>
+<a href="/venues/$venue.getId()/edit">Edit venue</a><br>
+<a href="/venues">View all venues</a><br>
+<a href="/">Home</a><br>

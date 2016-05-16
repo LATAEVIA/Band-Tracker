@@ -57,6 +57,30 @@ public class Venue {
     }
   }
 
+  public void update(String newVenueName) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE venues SET venue_name = :venue_name WHERE id = :id";
+      con.createQuery(sql)
+        .addParameter("venue_name", newVenueName)
+        .addParameter("id", this.id)
+        .executeUpdate();
+    }
+  }
+
+  public void delete() {
+  try(Connection con = DB.sql2o.open()) {
+    String deleteQuery = "DELETE FROM venues WHERE id = :id;";
+      con.createQuery(deleteQuery)
+        .addParameter("id", this.getId())
+        .executeUpdate();
+
+    String joinDeleteQuery = "DELETE FROM bands_venues WHERE venue_id = :venueId";
+      con.createQuery(joinDeleteQuery)
+        .addParameter("venueId", this.getId())
+        .executeUpdate();
+  }
+}
+
   public void addBand(Band band) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "INSERT INTO bands_venues (band_id, venue_id) VALUES (:band_id, :venue_id)";

@@ -1,29 +1,37 @@
 <div class="jumbotron">
   <h1>What venue(s) has $band.getBandName() performed in?</h1>
 
-<form action="/bands/$band.getId()/venues" method="post">
-  <input id="band_id" name="band_id" type="hidden" value="$band.getId()">
-  #foreach($venue in $venues)
-    <div class="checkbox form-group">
-      <label><input name="venueCheckbox" type="checkbox" value="$venue.getId()">$venue.getVenueName()</label>
-    </div>
-  #end
+  <form action="/bands/$band.getId()/venues" method="post" onsubmit="return atleast_onecheckbox(event)">
+    <input id="band_id" name="band_id" type="hidden" value="$band.getId()">
 
-  <button id="checklistVenueSubmit" type="submit" class="btn btn-default" >
+      #foreach($venue in $venues)
+        <div class="checkbox form-group">
+          <label><input name="venueCheckbox" type="checkbox" value="$venue.getId()">$venue.getVenueName()</label>
+        </div>
+      #end
 
+    <button id="checklistVenueSubmit" type="submit" class="btn btn-default">Add Venue(s) to band</button>
+  </form>
 
-
-    Add Venue(s) to band</button>
-</form>
+  <script type="text/javascript">
+    function atleast_onecheckbox(e) {
+      if ($("input[type=checkbox]:checked").length === 0) {
+        e.preventDefault();
+        alert('You must select a venue first.');
+        return false;
+      }
+    }
+  </script>
 </div>
 <br>
-Add venues to create a check list, or choose from the existing list, then submit.
+<h3>Add venues to create a check list, or choose from the existing list, then submit.</h3>
 
 <form action="/bands/$band.getId()/venues/new" method="post">
   <div class="form-group">
     <label for="venueName">Venue Name</label>
     <input id="venueName" name="venueName" type="text">
-  <button id="addaVenueToChecklitSubmit" type="submit" class="btn btn-default">Add Venue to list</button>
+    <button id="addaVenueToChecklitSubmit" type="submit" class="btn btn-default">Add Venue to list</button>
+  </div>
 </form>
 
 <br>

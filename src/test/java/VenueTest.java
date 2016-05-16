@@ -78,4 +78,31 @@ public class VenueTest {
     List savedBands = myVenue.getBands();
     assertEquals(1, savedBands.size());
   }
+
+  @Test
+  public void update_updatesVenueVenueName_true() {
+    Venue myVenue = new Venue("Thee FourHundred");
+    myVenue.save();
+    myVenue.update("Take a nap");
+    assertEquals("Take a nap", Venue.find(myVenue.getId()).getVenueName());
+  }
+
+  @Test
+  public void delete_deletesVenue_true() {
+    Venue myVenue = new Venue("Thee FourHundred");
+    myVenue.save();
+    int myVenueId = myVenue.getId();
+    myVenue.delete();
+    assertEquals(null, Venue.find(myVenueId));
+  }
+  @Test
+  public void delete_deletesAllVenuesAndCategoriesAssociations() {
+    Band myBand = new Band("Thee Epicoders");
+    myBand.save();
+    Venue myVenue = new Venue("Thee FourHundred");
+    myVenue.save();
+    myVenue.addBand(myBand);
+    myVenue.delete();
+    assertEquals(0, myBand.getVenues().size());
+  }
 }

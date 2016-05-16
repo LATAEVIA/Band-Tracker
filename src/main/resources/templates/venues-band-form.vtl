@@ -1,0 +1,40 @@
+<div class="jumbotron">
+  <h1>What band(s) has/have performed in $venue.getVenueName()?</h1>
+
+  <form action="/venues/$venue.getId()/bands" method="post" onsubmit="return atleast_onecheckbox(event)">
+    <input id="venue_id" name="venue_id" type="hidden" value="$venue.getId()">
+
+      #foreach($band in $bands)
+        <div class="checkbox form-group">
+          <label><input name="bandCheckbox" type="checkbox" value="$band.getId()">$band.getBandName()</label>
+        </div>
+      #end
+
+    <button id="checklistBandSubmit" type="submit" class="btn btn-default">Add Band(s) to venue</button>
+  </form>
+
+  <script type="text/javascript">
+    function atleast_onecheckbox(e) {
+      if ($("input[type=checkbox]:checked").length === 0) {
+        e.preventDefault();
+        alert('You must select a band first.');
+        return false;
+      }
+    }
+  </script>
+</div>
+<br>
+<h3>Add bands to create a check list, or choose from the existing list, then submit.</h3>
+
+<form action="/venues/$venue.getId()/bands/new" method="post">
+  <div class="form-group">
+    <label for="bandName">Band Name</label>
+    <input id="bandName" name="bandName" type="text">
+    <button id="addaBandToChecklistSubmit" type="submit" class="btn btn-default">Add Band to list</button>
+  </div>
+</form>
+
+<br>
+<a href="/venues/$venue.getId()/edit">Edit venue</a><br>
+<a href="/venues">View all venues</a><br>
+<a href="/">Home</a><br>

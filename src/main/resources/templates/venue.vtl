@@ -1,0 +1,18 @@
+<h1>$venue.getVenueName()</h1>
+
+<ul>
+  #foreach ($band in $venue.getBands())
+    <li>$band.getBandName()</li>
+  #end
+</ul>
+<br>
+
+<form action='/venues/$venue.getId()/delete' method='post'>
+  <button type="submit" class="btn-danger" id="delete">Delete Venue</button>
+</form>
+
+<br>
+<a href="/venues/$venue.getId()/bands/new">Add a band</a><br>
+<a href="/venues/$venue.getId()/edit">Edit venue</a><br>
+<a href="/venues">View all venues</a><br>
+<a href="/">Home</a><br>
