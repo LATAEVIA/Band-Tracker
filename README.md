@@ -1,29 +1,36 @@
-# _Epicodus JAVA Week 4 Independent Project: Band Tracker_
+# _Band Tracker_
 
-#### _When run through Gradle, will create an app for a band tracker. Users will be able to add a list of bands, and for each band, add venues where they've played concerts., 05/13/2016_
+#### _Java application project built as a code review of competencies including working with PostgreSQL, Sql2o, and Spark to build many-to-many relationships, using a join table, and CRUD & RESTful Routing to Update/Delete for many-to-many., 05/13/2016_
 
 #### By _**LaTaevia**_
 
 ## Description
 
-_This a static webpage with dynamic elements, a snapshot of sorts, assigned as an end-of-week project for my ninth week at Epicodus. It uses HTML, CSS, Bootstrap, Java, Velocity, Spark, FluentLenium, PostgreSQL and Gradle, and functions as an app for a band tracker. Users will be able to add a list of bands, and for each band, add venues where they've played concerts._
+_Java application webpage assigned as a project for my ninth week at Epicodus. It functions as an app for a band tracker. Users will be able to add a list of bands, and for each band, add venues where they've played concerts._
 
-## Setup/Installation Requirements
+## Prerequisites
 
-* _Clone through the command line using 'git clone https://github.com/LATAEVIA/JAVA-WK4-Band-Tracker.git'_
-* _Open files in any text editor to view source code_
+You will need the following properly installed on your computer.
 
-* _In PSQL:_
-* _CREATE DATABASE band_tracker;_
-* _\c band_tracker;_
-* _CREATE TABLE bands (id serial PRIMARY KEY, band_name varchar);_
-* _CREATE TABLE venues (id serial PRIMARY KEY, venue_name varchar);_
-* _CREATE TABLE bands_venues (id serial PRIMARY KEY, band_id int, venue_id int);_
-* _CREATE DATABASE band_tracker_test WITH TEMPLATE band_tracker;_
+* [Gradle](https://gradle.org/gradle-download/)
+* PostgreSQL on Mac with HomeBrew `brew install postgres` 
+* [PostgreSQL (All OS)] (http://www.enterprisedb.com/products-services-training/pgdownload#windows)
 
-*_To Demo:_
-* _With Gradle installed, navigate to folder in the terminal and 'gradle run'_
-* _Open localhost:4567 in any browser to view_
+## Installation
+
+* `git clone https://github.com/LATAEVIA/Band-Tracker.git`
+* Change into the new directory
+* In a new terminal window/tab `postgres` to launch postgres
+* In another new terminal window/tab `psql` to launch psql
+* In psql window/tab `CREATE DATABASE band_tracker;`
+* In the terminal window/tab `psql band_tracker < band_tracker.sql`
+* In psql window/tab `CREATE DATABASE band_tracker_test WITH TEMPLATE band_tracker;`
+* `gradle build`
+
+## Running / Development
+
+* `gradle run`
+* Visit app at [http://localhost:4567](http://localhost:4567).
 
 ## Technologies Used
 
@@ -36,7 +43,6 @@ _This a static webpage with dynamic elements, a snapshot of sorts, assigned as a
 * _Velocity_
 * _FluentLenium_
 * _PostgreSQL_
-
 
 ### License
 
